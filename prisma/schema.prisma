@@ -1,8 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider     = "prisma-client"
   output       = "../generated/prisma"
@@ -14,15 +12,18 @@ datasource db {
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  name         String
-  email        String        @unique
-  password     String
-  role         String        @default("USER")
-  status       Boolean       @default(true)
-  reservations Reservation[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id            Int            @id @default(autoincrement())
+  name          String
+  email         String         @unique
+  password      String
+  role          String         @default("USER")
+  status        Boolean        @default(true)
+  reservations  Reservation[]
+  reviews       Review[]
+  favorites     Favorite[]
+  notifications Notification[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 model Space {
@@ -32,9 +33,13 @@ model Space {
   location     String
   capacity     Int
   type         String
+  price        Float         @default(0)
   imageUrl     String?
   status       Boolean       @default(true)
   reservations Reservation[]
+  reviews      Review[]
+  favorites    Favorite[]
+  amenities    SpaceAmenity[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 }
@@ -53,4 +58,61 @@ model Reservation {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Amenity {
+  id     Int            @id @default(autoincrement())
+  name   String         @unique
+  icon   String?
+  spaces SpaceAmenity[]
+}
+
+// Tabla intermedia para la relación N:N entre Space y Amenity
+model SpaceAmenity {
+  spaceId   Int
+  amenityId Int
+
+  space     Space   @relation(fields: [spaceId], references: [id])
+  amenity   Amenity @relation(fields: [amenityId], references: [id])
+
+  @@id([spaceId, amenityId])
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  spaceId   Int
+  rating    Int
+  comment   String?
+
+  user      User     @relation(fields: [userId], references: [id])
+  space     Space    @relation(fields: [spaceId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Favorite {
+  id      Int   @id @default(autoincrement())
+  userId  Int
+  spaceId Int
+
+  user    User  @relation(fields: [userId], references: [id])
+  space   Space @relation(fields: [spaceId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, spaceId])
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  title     String
+  message   String
+  type      String   @default("INFO")
+  read      Boolean  @default(false)
+
+  user      User     @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
 }

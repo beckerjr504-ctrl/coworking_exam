@@ -7,6 +7,10 @@ import { UsersModule } from './users/users.module';
 import { SpacesModule } from './spaces/spaces.module';
 import { ReservationsModule } from './reservations/reservations.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { AmenitiesModule } from './amenities/amenities.module';
+import { ReviewsModule } from './reviews/reviews.module';
+import { FavoritesModule } from './favorites/favorites.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -16,6 +20,10 @@ import { PrismaModule } from './prisma/prisma.module';
     SpacesModule,
     ReservationsModule,
     PrismaModule,
+    AmenitiesModule,
+    ReviewsModule,
+    FavoritesModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
