@@ -1,98 +1,106 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Nido Coworking
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Sistema de coworking para el examen de Seminario de Software II.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Qué es este proyecto
 
-## Description
+Es una aplicación fullstack para buscar y reservar espacios de coworking.
+Incluye:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Registro e inicio de sesión con JWT
+- Página de exploración de espacios
+- Detalle de espacio con reservas
+- Mis reservas con estado y cancelación
+- Favoritos y notificaciones
+- Backend en NestJS + Prisma + PostgreSQL
+- Frontend en Next.js 15 + Tailwind CSS + TypeScript
 
-## Project setup
+## Tecnologías usadas
 
-```bash
-$ npm install
-```
+- Backend: NestJS, Prisma, PostgreSQL, Passport JWT
+- Frontend: Next.js 15 (App Router), React, Tailwind CSS, Axios
+- Base de datos: Supabase / PostgreSQL en producción
+- Despliegue: Render (backend) y Vercel (frontend)
 
-## Compile and run the project
+## Cómo correr el backend localmente
+
+1. Instala dependencias en la raíz del repo:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+2. Crea un archivo `.env` en la raíz con las variables de entorno:
+
+```env
+DATABASE_URL="file:./dev.db"
+JWT_SECRET="tu_clave_secreta"
+JWT_EXPIRES_IN="1d"
+```
+
+3. Ejecuta el backend en modo desarrollo:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run start:dev
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+4. El backend estará disponible en:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+http://localhost:3000
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Cómo correr el frontend localmente
 
-## Resources
+1. Entra a la carpeta `frontend`:
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+cd frontend
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+2. Instala dependencias:
 
-## Support
+```bash
+npm install
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+3. Crea un archivo `frontend/.env.local` con la URL del backend local:
 
-## Stay in touch
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3000
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+4. Ejecuta el frontend en modo desarrollo:
 
-## License
+```bash
+npm run dev
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+5. El frontend estará disponible en:
+
+```bash
+http://localhost:3001
+```
+
+## Despliegue
+
+- Backend desplegado en Render como servicio Node/NestJS.
+- Frontend desplegado en Vercel como proyecto Next.js.
+- En Vercel configura `NEXT_PUBLIC_API_URL` con la URL pública del backend en Render.
+- En Render configura `DATABASE_URL`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `ALLOWED_ORIGINS` y `PORT`.
+
+## Link de despliegue
+
+Frontend en Vercel: `https://<tu-proyecto>.vercel.app`
+
+> Reemplaza con la URL real de tu despliegue.
+
+## Comandos Git finales
+
+```bash
+git add .
+git commit -m "Final commit: coworking exam app complete"
+git push origin main
+```
+
+> Si tu rama principal no es `main`, usa la rama correcta en el push.

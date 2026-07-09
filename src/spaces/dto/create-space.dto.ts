@@ -1,4 +1,4 @@
-import { IsIn, IsInt, IsOptional, IsString, IsUrl, Min } from 'class-validator';
+import { IsIn, IsInt, IsNumber, IsOptional, IsString, IsUrl, Min } from 'class-validator';
 
 export class CreateSpaceDto {
   @IsString()
@@ -17,6 +17,11 @@ export class CreateSpaceDto {
 
   @IsIn(['SALA', 'ESCRITORIO', 'AUDITORIO'])
   type: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  price?: number;
 
   @IsOptional()
   @IsUrl()

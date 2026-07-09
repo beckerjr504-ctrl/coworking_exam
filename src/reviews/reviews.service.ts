@@ -6,13 +6,19 @@ export class ReviewsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(userId: number, dto: { spaceId: number; rating: number; comment?: string }) {
-    // Regla de negocio: solo puede reseñar si tuvo una reserva finalizada en ese espacio
-    const hasCompletedReservation = await this.prisma.reservation.findFirst({
-      where: { userId, spaceId: dto.spaceId, status: 'COMPLETED' },
+    // Regla de negocio: solo puede reseñar si ya hizo una reserva en ese espacio
+    const reservation = await this.prisma.reservation.findFirst({
+      where: {
+        userId,
+        spaceId: dto.spaceId,
+        status: { not: 'CANCELLED' },
+      },
     });
-    if (!hasCompletedReservation) {
-      throw new ForbiddenException('Solo puedes reseñar espacios que hayas usado y finalizado');
+
+    if (!reservation) {
+      throw new ForbiddenException('Solo puedes reseñar espacios para los que tengas una reserva válida');
     }
+
     return this.prisma.review.create({
       data: { userId, spaceId: dto.spaceId, rating: dto.rating, comment: dto.comment },
     });
